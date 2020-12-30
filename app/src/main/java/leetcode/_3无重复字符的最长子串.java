@@ -1,26 +1,27 @@
 package leetcode;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class _3无重复字符的最长子串 {
     public int lengthOfLongestSubstring(String s) {
         if (s == null || s.length() <= 0) {
             return 0;
         }
-        char[] chars = s.toCharArray();
-        ArrayList<Character> characters = new ArrayList<>();
-        int i = 0;
-        int max = 0;
-        while (i < chars.length) {
-            if (!characters.contains(chars[i])) {
-                characters.add(chars[i]);
+
+        Set<Character> characters = new HashSet<>();
+        int left = 0, right = 0;
+        int max = Integer.MIN_VALUE;
+
+        while (left <= right && right < s.length()) {
+            if (!characters.contains(s.charAt(right))) {
+                characters.add(s.charAt(right++));
                 max = Math.max(max, characters.size());
-                i++;
             } else {
-                characters.remove(0);
+                characters.remove(s.charAt(left++));
             }
         }
-
         return max;
     }
 
